@@ -26,10 +26,9 @@
   },
   "homepage": "https://github.com/gayankalhara/mtit-nodejs#readme",
   "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "boom": "^4.3.1",
-    "gulp-nodemon": "^2.2.1",
-    "hapi": "^16.1.1",
-    "rest-hapi": "^0.15.4"
+    "express": "~4.0.0",
+    "morgan": "~1.0.0",
+    "mongoose" : "~4.6.8",
+    "body-parser": "~1.0.1"
   }
 }
