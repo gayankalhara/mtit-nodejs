@@ -5,6 +5,7 @@ const bodyParser= require('body-parser');
 const app = express();
 let mongoose = require('mongoose');
 let config = require('./config.json');
+let cors = require('cors');
 
 let invoiceRoutes = require('./routes/invoice');
 
@@ -19,6 +20,8 @@ let DB_PASSWORD = config.db.password;
 mongoose.connect('mongodb://' + DB_USERNAME + ':' + DB_PASSWORD + '@' + DB_HOST_NAME + ':'  + DB_PORT + '/' + DB_NAME);
 
 app.use(bodyParser.json());
+
+app.use(cors({ origin: ['http://localhost:4200', /\.goinvoicr\.com$/] }));
 
 app.get('/', function (req, res) {
     res.send('Welcome to goInvoicr REST API');

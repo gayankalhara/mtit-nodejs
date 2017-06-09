@@ -18,7 +18,24 @@ let invoiceSchema = new Schema({
     items: {
         type: Array,
         required: true,
+    },
+    discountType: {
+        type: String
+    },
+    discount: {
+        type: Number
+    },
+    subTotal: {
+        type: Number,
+        required: true
+    },
+    total: {
+        type: Number,
+        required: true
     }
-}, { collection: 'invoices' });
+}, {
+    timestamps: true,
+    collection: 'invoices'
+});
 
 module.exports = mongoose.model('Invoice', invoiceSchema);

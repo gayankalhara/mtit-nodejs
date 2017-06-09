@@ -9,11 +9,18 @@ invoiceRouter
 
         console.log('POST /create');
 
-        let invoice = new Invoice(request.body);
+        new Invoice(request.body).save(function(err, result) {
+            if (err) {
+                response.status(500).send(err);
+                throw err;
+            }
 
-        invoice.save();
+            if(result) {
+                response.status(201).send(result);
+            }
+        });
 
-        response.status(201).send(invoice);
+
     });
 
 module.exports = invoiceRouter;
