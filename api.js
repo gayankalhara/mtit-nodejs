@@ -1,34 +1,31 @@
 'use strict';
 
-let Hapi = require('hapi');
+const express = require('express');
+const bodyParser= require('body-parser');
+const app = express();
 let mongoose = require('mongoose');
-let restHapi = require('rest-hapi');
+let config = require('./config.json');
 
-const config = require('./config');
+let invoiceRoutes = require('./routes/invoice');
 
-function api() {
+let PORT = config.port;
 
-    let server = new Hapi.Server();
+let DB_PORT = config.db.port;
+let DB_HOST_NAME = config.db.host;
+let DB_NAME = config.db.database;
+let DB_USERNAME = config.db.username;
+let DB_PASSWORD = config.db.password;
 
-    server.connection({port: 8124});
+mongoose.connect('mongodb://' + DB_USERNAME + ':' + DB_PASSWORD + '@' + DB_HOST_NAME + ':'  + DB_PORT + '/' + DB_NAME);
 
-    restHapi.config = config;
+app.use(bodyParser.json());
 
-    server.connection(restHapi.config.server.connection);
+app.get('/', function (req, res) {
+    res.send('Welcome to goInvoicr REST API');
+});
 
-    server.register({
-            register: restHapi,
-            options: {
-                mongoose: mongoose
-            }
-        },
-        function () {
-            server.start(function () {
-                restHapi.logUtil.logActionComplete(restHapi.logger, "Server Initialized", server.info);
-            });
-        });
+app.use('/invoice', invoiceRoutes);
 
-    return server;
-}
-
-module.exports = api();
+app.listen(PORT, function () {
+    console.log('goInvoicr Server listening on port ' + PORT + '!');
+});

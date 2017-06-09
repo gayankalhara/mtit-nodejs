@@ -1,22 +1,24 @@
-'use strict';
+let mongoose = require('mongoose');
+let Schema = mongoose.Schema;
 
-module.exports = function (mongoose) {
-    let Types = mongoose.Schema.Types;
-    let Schema = new mongoose.Schema({
-        id: {
-            type: Types.String,
-            unique: true
-        },
-        title: {
-            type: Types.String,
-            allowNull: false
-        },
-    });
+let invoiceSchema = new Schema({
+    invoiceNumber: {
+        type: String,
+        unique: true,
+        required: true
+    },
+    invoiceDate: {
+        type: Object,
+        required: true
+    },
+    dueDate: {
+        type: Object,
+        required: true
+    },
+    items: {
+        type: Array,
+        required: true,
+    }
+}, { collection: 'invoices' });
 
-    Schema.statics = {
-        collectionName: "invoice",
-        routeOptions: {}
-    };
-
-    return Schema;
-};
+module.exports = mongoose.model('Invoice', invoiceSchema);
