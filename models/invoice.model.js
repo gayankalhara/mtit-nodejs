@@ -32,6 +32,10 @@ let invoiceSchema = new Schema({
     total: {
         type: Number,
         required: true
+    },
+    status: {
+        type: Number,
+        required: true
     }
 }, {
     timestamps: true,
