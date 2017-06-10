@@ -7,7 +7,7 @@ invoiceRouter
     .route('/create')
     .post(function (request, response) {
 
-        console.log('POST /create');
+        console.log('POST /invoice/create');
 
         new Invoice(request.body).save(function(err, result) {
             if (err) {
@@ -20,6 +20,58 @@ invoiceRouter
             }
         });
 
+
+    });
+
+invoiceRouter
+    .route('/fetch')
+    .get(function (request, response) {
+
+        console.log('GET /invoice/fetch');
+
+        Invoice.find({}).sort({createdAt: 'desc'}).exec(function(err, invoices) {
+            if(err) {
+                response.send(err);
+            } else {
+                response.send(invoices);
+            }
+        });
+
+    });
+
+invoiceRouter
+    .route('/delete/:invoiceNumber')
+    .delete(function (request, response) {
+
+        console.log('DELETE /invoice/:invoiceNumber');
+
+        let invoiceNumber = request.params.invoiceNumber;
+
+        Invoice.findOne({ id: invoiceNumber }, function (error, item) {
+
+            if (error) {
+                response.status(500).send(error);
+                return;
+            }
+
+            if (item) {
+                item.remove(function (error) {
+
+                    if (error) {
+                        response.status(500).send(error);
+                        return;
+                    }
+
+                    response.status(200).json({
+                        'message': 'Invoice with id ' + invoiceNumber + ' was removed.'
+                    });
+                });
+            } else {
+                response.status(404).json({
+                    message: 'Invoice with id ' + invoiceNumber + ' was not found.'
+                });
+            }
+        });
 
     });
 
