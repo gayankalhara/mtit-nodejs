@@ -47,7 +47,7 @@ invoiceRouter
 
         let invoiceNumber = request.params.invoiceNumber;
 
-        Invoice.findOne({ id: invoiceNumber }, function (error, item) {
+        Invoice.findOne({ invoiceNumber: invoiceNumber }, function (error, item) {
 
             if (error) {
                 response.status(500).send(error);
