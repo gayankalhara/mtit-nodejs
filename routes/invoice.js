@@ -5,7 +5,7 @@ let invoiceRouter = express.Router();
 
 invoiceRouter
     .route('/create')
-    .post(function (request, response) {
+    .put(function (request, response) {
 
         console.log('POST /invoice/create');
 
@@ -19,7 +19,6 @@ invoiceRouter
                 response.status(201).send(result);
             }
         });
-
 
     });
 
