@@ -39,6 +39,25 @@ invoiceRouter
     });
 
 invoiceRouter
+    .route('/:invoiceNumber')
+    .get(function (request, response) {
+
+        console.log('GET /invoice/:invoiceNumber');
+
+        let invoiceNumber = request.params.invoiceNumber;
+
+        Invoice.findOne({invoiceNumber: invoiceNumber},
+            function(err, invoiceData) {
+                if(err) {
+                    response.send(err);
+                } else {
+                    response.send(invoiceData);
+                }
+            });
+
+    });
+
+invoiceRouter
     .route('/delete/:invoiceNumber')
     .delete(function (request, response) {
 
