@@ -1,6 +1,5 @@
 let express = require('express');
 let Invoice = require('../models/invoice.model');
-
 let invoiceRouter = express.Router();
 
 invoiceRouter

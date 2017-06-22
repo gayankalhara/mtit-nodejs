@@ -8,6 +8,7 @@ let config = require('./config.json');
 let cors = require('cors');
 
 let invoiceRoutes = require('./routes/invoice');
+let userRoutes = require('./routes/users');
 
 let PORT = config.port;
 
@@ -21,13 +22,14 @@ mongoose.connect('mongodb://' + DB_USERNAME + ':' + DB_PASSWORD + '@' + DB_HOST_
 
 app.use(bodyParser.json());
 
-app.use(cors({ origin: ['http://localhost:4200', /\.goinvoicr\.com$/] }));
+app.use(cors({ origin: ['http://localhost:4211', /\.goinvoicr\.com$/] }));
 
 app.get('/', function (req, res) {
     res.send('Welcome to goInvoicr REST API');
 });
 
 app.use('/invoice', invoiceRoutes);
+app.use('/users', userRoutes);
 
 app.listen(PORT, function () {
     console.log('goInvoicr Server listening on port ' + PORT + '!');
